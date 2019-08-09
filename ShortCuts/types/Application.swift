@@ -11,10 +11,19 @@ import AppKit
 
 class Application {
     public var identifier: String
+    public var name: String
     public var runningInstance: NSRunningApplication?
     
-    internal init(identifier: String, runningInstance: NSRunningApplication?) {
+    required init(identifier: String, name: String, runningInstance: NSRunningApplication?) {
         self.identifier = identifier
+        self.name = name
         self.runningInstance = runningInstance
+    }
+    
+    static func fromRunningApplication(runningApplication: NSRunningApplication) -> Application? {
+        if let identifier = runningApplication.bundleIdentifier, let name = runningApplication.localizedName {
+            return Application(identifier: identifier, name: name, runningInstance: runningApplication)
+        }
+        return nil
     }
 }

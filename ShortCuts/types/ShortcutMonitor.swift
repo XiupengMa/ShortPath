@@ -17,7 +17,7 @@ class ShortcutMonitor {
     private var isMonitoring = false
     private var globalMonitor: Any?
     private var localMonitor: Any?
-    private var delegate: ShortcutMonitorDelegate?
+    public var delegate: ShortcutMonitorDelegate?
     
     public func start() {
         if isMonitoring {

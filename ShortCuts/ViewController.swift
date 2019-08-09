@@ -9,7 +9,10 @@
 import Cocoa
 
 class ViewController: NSViewController {
-
+    private let shortcutMonitor = ShortcutMonitor()
+    private let shortcutStorage = ShortcutStorage()
+    private var monitor: Monitor?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,23 +25,31 @@ class ViewController: NSViewController {
             }
         }
         
-        NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { (event) in
-//            print(event)
-            if event.modifierFlags.contains(.command) &&
-                event.modifierFlags.contains(.control)
-                {
-                    if event.keyCode == 38 {
-                        self.getRunningApplications("chrome")
-                    } else if event.keyCode == 40 {
-                        self.getRunningApplications("youdao")
-                    } else if event.keyCode == 37 {
-                        self.getRunningApplications("mpv")
-                    }
-//                    print(event.keyCode)
-                    
-            }
+        if monitor == nil {
+            monitor = Monitor(shortcutMonitor: shortcutMonitor, shortcutStorage: shortcutStorage)
+            monitor = monitor!
         }
-        // Do any additional setup after loading the view.
+        
+        shortcutMonitor.start()
+        var flags = NSEvent.ModifierFlags.init();
+        flags = flags.union(.command)
+        flags = flags.union(.control)
+        flags = flags.union(NSEvent.ModifierFlags.init(rawValue: 0x111))
+        shortcutStorage.storeAssignmentModeStorage(Shortcut(keyCode: 7, flags: flags))
+//
+//        NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { (event) in
+//            if event.modifierFlags.contains(.command) &&
+//                event.modifierFlags.contains(.control)
+//                {
+//                    if event.keyCode == 38 {
+//                        self.getRunningApplications("chrome")
+//                    } else if event.keyCode == 40 {
+//                        self.getRunningApplications("youdao")
+//                    } else if event.keyCode == 37 {
+//                        self.getRunningApplications("mpv")
+//                    }            }
+//        }
+
     }
 
     override var representedObject: Any? {

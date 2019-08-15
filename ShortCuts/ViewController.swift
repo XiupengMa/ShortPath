@@ -8,10 +8,34 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, MonitorDelegte {
+    static func hasA11yPrivileges() -> Bool{
+        let trusted = kAXTrustedCheckOptionPrompt.takeUnretainedValue()
+        let privOptions = [trusted: true] as CFDictionary
+        let accessEnabled = AXIsProcessTrustedWithOptions(privOptions)
+        return accessEnabled
+    }
+    
     private let shortcutMonitor = ShortcutMonitor()
     private let shortcutStorage = ShortcutStorage()
-    private var monitor: Monitor?
+    private var monitor: Monitor
+    
+    convenience init() {
+        self.init(nibName:nil, bundle:nil)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        monitor = Monitor(shortcutMonitor: shortcutMonitor, shortcutStorage: shortcutStorage)
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        monitor.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        monitor = Monitor(shortcutMonitor: shortcutMonitor, shortcutStorage: shortcutStorage)
+        super.init(coder:coder)
+        monitor.delegate = self
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,31 +49,12 @@ class ViewController: NSViewController {
             }
         }
         
-        if monitor == nil {
-            monitor = Monitor(shortcutMonitor: shortcutMonitor, shortcutStorage: shortcutStorage)
-            monitor = monitor!
-        }
-        
         shortcutMonitor.start()
         var flags = NSEvent.ModifierFlags.init();
         flags = flags.union(.command)
         flags = flags.union(.control)
         flags = flags.union(NSEvent.ModifierFlags.init(rawValue: 0x111))
         shortcutStorage.storeAssignmentModeStorage(Shortcut(keyCode: 7, flags: flags))
-//
-//        NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { (event) in
-//            if event.modifierFlags.contains(.command) &&
-//                event.modifierFlags.contains(.control)
-//                {
-//                    if event.keyCode == 38 {
-//                        self.getRunningApplications("chrome")
-//                    } else if event.keyCode == 40 {
-//                        self.getRunningApplications("youdao")
-//                    } else if event.keyCode == 37 {
-//                        self.getRunningApplications("mpv")
-//                    }            }
-//        }
-
     }
 
     override var representedObject: Any? {
@@ -58,34 +63,25 @@ class ViewController: NSViewController {
         }
     }
     
-    static func hasA11yPrivileges() -> Bool{
-        let trusted = kAXTrustedCheckOptionPrompt.takeUnretainedValue()
-        let privOptions = [trusted: true] as CFDictionary
-        let accessEnabled = AXIsProcessTrustedWithOptions(privOptions)
-        return accessEnabled
+    // Monitor Delegate
+    func onEnteringAssignmentMode(fromMonitor: Monitor) {
+        print("entering assignment mode")
     }
     
-    func getRunningApplications(_ key: String) {
-        let runningApps = NSWorkspace.shared.runningApplications
-        var chrome: NSRunningApplication?
-        for app in runningApps {
-            if app.localizedName?.lowercased().contains(key) ?? false {
-                chrome = app
-                break
-            }
-        }
-//        if let c = chrome {
-//            NSWorkspace.shared.activate
-//            NSWorkspace.shared.frontmostApplication(chrome)
-//        }
-        if let c = chrome {
-//            print(c)
-//            print(c.activate(options: .activateIgnoringOtherApps))
-            c.activate(options: .activateIgnoringOtherApps)
-            if c.isHidden {
-                c.unhide()
-            }
-        }
+    func onExitAssignmentMode(withAssignedApplication application: Application, replacedApplication: Application?, withShortcut shortcut: Shortcut, fromMonitor: Monitor) {
+        print("exiting assignment mode, assigned short cut \(shortcut) to application \(application.name)")
+    }
+    
+    func onTriggerApplication(application: Application, byShortcut shortcut: Shortcut, fromMonitor monitor: Monitor) {
+        print("triggered application \(application.name) with shortcut \(shortcut)")
+    }
+    
+    func onConflictWithAssignmentShortcut(shortcut: Shortcut, fromMonitor: Monitor) {
+        print("shortcut \(shortcut) conflicts with assignment shortcut")
+    }
+    
+    func onFailedToFindRunningInstanceOfApplication(application: Application, withShortcut shortcut: Shortcut, fromMonitor: Monitor) {
+        print("failed to find running instance of application \(application.name)")
     }
 }
 

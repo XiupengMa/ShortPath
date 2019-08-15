@@ -32,4 +32,8 @@ class ShortcutStorage {
     public func isAssignmentModeShortcut(_ shortcut: Shortcut) -> Bool {
         return assignmentModeShortcut == shortcut
     }
+    
+    public func getAllShortcuts() -> [Shortcut: Application] {
+        return localStorage
+    }
 }

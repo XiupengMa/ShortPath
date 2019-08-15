@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7A3FD63E22F9433C009911C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A3FD63D22F9433C009911C1 /* AppDelegate.swift */; };
-		7A3FD64022F9433C009911C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A3FD63F22F9433C009911C1 /* ViewController.swift */; };
 		7A3FD64222F9433D009911C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A3FD64122F9433D009911C1 /* Assets.xcassets */; };
 		7A3FD64522F9433D009911C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A3FD64322F9433D009911C1 /* Main.storyboard */; };
 		7A54A3C722FD469A007DA0ED /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A54A3C622FD469A007DA0ED /* Application.swift */; };
@@ -21,7 +20,6 @@
 /* Begin PBXFileReference section */
 		7A3FD63A22F9433C009911C1 /* ShortCuts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShortCuts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A3FD63D22F9433C009911C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7A3FD63F22F9433C009911C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7A3FD64122F9433D009911C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A3FD64422F9433D009911C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7A3FD64622F9433D009911C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,7 +63,6 @@
 			children = (
 				7A54A3C822FD505A007DA0ED /* types */,
 				7A3FD63D22F9433C009911C1 /* AppDelegate.swift */,
-				7A3FD63F22F9433C009911C1 /* ViewController.swift */,
 				7A3FD64122F9433D009911C1 /* Assets.xcassets */,
 				7A3FD64322F9433D009911C1 /* Main.storyboard */,
 				7A3FD64622F9433D009911C1 /* Info.plist */,
@@ -161,7 +158,6 @@
 				7A54A3CA22FD508E007DA0ED /* Monitor.swift in Sources */,
 				7AFC8A3C22FBF334002C710D /* ShortcutStorage.swift in Sources */,
 				7AFC8A3A22FBEC78002C710D /* Shortcut.swift in Sources */,
-				7A3FD64022F9433C009911C1 /* ViewController.swift in Sources */,
 				7A3FD63E22F9433C009911C1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,7 +9,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte {
+class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelegate {
     static func hasA11yPrivileges() -> Bool{
         let trusted = kAXTrustedCheckOptionPrompt.takeUnretainedValue()
         let privOptions = [trusted: true] as CFDictionary
@@ -38,7 +38,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte {
           button.action = #selector(printQuote(_:))
         }
         
-        constructMenu()
+        let menu = NSMenu()
+        menu.delegate = self
+        statusItem.menu = menu
+        
         initMonitor()
     }
 
@@ -51,16 +54,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte {
       let quoteAuthor = "Mark Twain"
       
       print("\(quoteText) — \(quoteAuthor)")
-    }
-    
-    func constructMenu() {
-      let menu = NSMenu()
-
-      menu.addItem(NSMenuItem(title: "Print Quote", action: #selector(AppDelegate.printQuote(_:)), keyEquivalent: "P"))
-      menu.addItem(NSMenuItem.separator())
-      menu.addItem(NSMenuItem(title: "Quit Quotes", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
-
-      statusItem.menu = menu
     }
     
     func initMonitor() {
@@ -78,7 +71,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte {
         flags = flags.union(.command)
         flags = flags.union(.control)
         flags = flags.union(NSEvent.ModifierFlags.init(rawValue: 0x111))
-        shortcutStorage.storeAssignmentModeStorage(Shortcut(keyCode: 7, flags: flags))
+        shortcutStorage.storeAssignmentModeStorage(Shortcut(keyCode: 7, flags: flags, characters: "x"))
+    }
+    
+    func getApplicationMenuItems() -> [NSMenuItem] {
+        let runningApplications = NSWorkspace.shared.runningApplications;
+        
+        var hasRunningInstance = [String: Bool]()
+        
+        for runningApplication in runningApplications {
+            if let bundleName = runningApplication.bundleIdentifier {
+                hasRunningInstance[bundleName] = true
+            }
+        }
+        
+        return shortcutStorage.getAllShortcuts().map { (key: Shortcut, value: Application) -> NSMenuItem in
+            let item = NSMenuItem(title: value.name + " " + key.toString(), action: hasRunningInstance[value.identifier, default: false] ? #selector(noop) : nil, keyEquivalent: "")
+            return item
+        }
+    }
+    
+    @objc func noop() {
+        
     }
     
     // Monitor Delegate
@@ -100,5 +114,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte {
 
     func onFailedToFindRunningInstanceOfApplication(application: Application, withShortcut shortcut: Shortcut, fromMonitor: Monitor) {
        print("failed to find running instance of application \(application.name)")
+    }
+    
+    // NSMenu Delegate
+    func menuWillOpen(_ menu: NSMenu) {
+        menu.removeAllItems()
+
+        menu.addItem(NSMenuItem(title: "Print Quote", action: #selector(AppDelegate.printQuote(_:)), keyEquivalent: "P"))
+        menu.addItem(NSMenuItem.separator())
+        getApplicationMenuItems().forEach { (item) in
+            menu.addItem(item)
+        }
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(NSMenuItem(title: "Quit Quotes", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
     }
 }

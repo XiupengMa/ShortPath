@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
     private let shortcutStorage = ShortcutStorage()
     private var monitor: Monitor
     private let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
+    private let popover = NSPopover()
     
     override init() {
         monitor = Monitor(shortcutMonitor: shortcutMonitor, shortcutStorage: shortcutStorage)
@@ -34,13 +35,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
         iconImage?.size = NSMakeSize(18.0, 18.0)
         
         if let button = statusItem.button {
-          button.image = iconImage
-          button.action = #selector(printQuote(_:))
+            button.image = iconImage
+            button.action = #selector(togglePopover(_:))
         }
         
-        let menu = NSMenu()
-        menu.delegate = self
-        statusItem.menu = menu
+        popover.contentViewController = PopoverController.freshController()
+        popover.behavior = NSPopover.Behavior.transient;
         
         initMonitor()
     }
@@ -48,12 +48,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
+    
+    func applicationWillResignActive(_ notification: Notification) {
+        popover.close()
+    }
 
-    @objc func printQuote(_ sender: Any?) {
-      let quoteText = "Never put off until tomorrow what you can do the day after tomorrow."
-      let quoteAuthor = "Mark Twain"
-      
-      print("\(quoteText) — \(quoteAuthor)")
+    @objc func togglePopover(_ sender: Any?) {
+      if popover.isShown {
+        closePopover(sender: sender)
+      } else {
+        showPopover(sender: sender)
+      }
+    }
+    
+    func showPopover(sender: Any?) {
+      if let button = statusItem.button {
+        NSApp.activate(ignoringOtherApps: true)
+        popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+      }
+    }
+
+    func closePopover(sender: Any?) {
+      popover.performClose(sender)
     }
     
     func initMonitor() {
@@ -118,14 +134,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
     
     // NSMenu Delegate
     func menuWillOpen(_ menu: NSMenu) {
-        menu.removeAllItems()
-
-        menu.addItem(NSMenuItem(title: "Print Quote", action: #selector(AppDelegate.printQuote(_:)), keyEquivalent: "P"))
-        menu.addItem(NSMenuItem.separator())
-        getApplicationMenuItems().forEach { (item) in
-            menu.addItem(item)
-        }
-        menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit Quotes", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+//        menu.removeAllItems()
+//
+//        menu.addItem(NSMenuItem(title: "Print Quote", action: #selector(AppDelegate.printQuote(_:)), keyEquivalent: "P"))
+//        menu.addItem(NSMenuItem.separator())
+//        getApplicationMenuItems().forEach { (item) in
+//            menu.addItem(item)
+//        }
+//        menu.addItem(NSMenuItem.separator())
+//        menu.addItem(NSMenuItem(title: "Quit Quotes", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
     }
 }

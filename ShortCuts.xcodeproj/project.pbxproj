@@ -12,6 +12,7 @@
 		7A3FD64522F9433D009911C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A3FD64322F9433D009911C1 /* Main.storyboard */; };
 		7A54A3C722FD469A007DA0ED /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A54A3C622FD469A007DA0ED /* Application.swift */; };
 		7A54A3CA22FD508E007DA0ED /* Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A54A3C922FD508E007DA0ED /* Monitor.swift */; };
+		7AB21F7D230D08FA00DDE1F0 /* PopoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB21F7C230D08FA00DDE1F0 /* PopoverController.swift */; };
 		7AFC8A3822FBEBF6002C710D /* ShortcutMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC8A3722FBEBF6002C710D /* ShortcutMonitor.swift */; };
 		7AFC8A3A22FBEC78002C710D /* Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC8A3922FBEC78002C710D /* Shortcut.swift */; };
 		7AFC8A3C22FBF334002C710D /* ShortcutStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC8A3B22FBF334002C710D /* ShortcutStorage.swift */; };
@@ -26,6 +27,7 @@
 		7A3FD64722F9433D009911C1 /* ShortCuts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShortCuts.entitlements; sourceTree = "<group>"; };
 		7A54A3C622FD469A007DA0ED /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		7A54A3C922FD508E007DA0ED /* Monitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monitor.swift; sourceTree = "<group>"; };
+		7AB21F7C230D08FA00DDE1F0 /* PopoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverController.swift; sourceTree = "<group>"; };
 		7AFC8A3722FBEBF6002C710D /* ShortcutMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutMonitor.swift; sourceTree = "<group>"; };
 		7AFC8A3922FBEC78002C710D /* Shortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcut.swift; sourceTree = "<group>"; };
 		7AFC8A3B22FBF334002C710D /* ShortcutStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutStorage.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				7A3FD64622F9433D009911C1 /* Info.plist */,
 				7A3FD64722F9433D009911C1 /* ShortCuts.entitlements */,
 				7A54A3C922FD508E007DA0ED /* Monitor.swift */,
+				7AB21F7C230D08FA00DDE1F0 /* PopoverController.swift */,
 			);
 			path = ShortCuts;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			files = (
 				7A54A3C722FD469A007DA0ED /* Application.swift in Sources */,
 				7AFC8A3822FBEBF6002C710D /* ShortcutMonitor.swift in Sources */,
+				7AB21F7D230D08FA00DDE1F0 /* PopoverController.swift in Sources */,
 				7A54A3CA22FD508E007DA0ED /* Monitor.swift in Sources */,
 				7AFC8A3C22FBF334002C710D /* ShortcutStorage.swift in Sources */,
 				7AFC8A3A22FBEC78002C710D /* Shortcut.swift in Sources */,

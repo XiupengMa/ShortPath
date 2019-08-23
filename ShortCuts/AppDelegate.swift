@@ -22,6 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
     private var monitor: Monitor
     private let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
     private let popover = NSPopover()
+    private let popoverController = PopoverController.freshController()
     
     override init() {
         monitor = Monitor(shortcutMonitor: shortcutMonitor, shortcutStorage: shortcutStorage)
@@ -39,7 +40,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
             button.action = #selector(togglePopover(_:))
         }
         
-        popover.contentViewController = PopoverController.freshController()
+        popoverController.setShortcutStorage(shortcutStorage: shortcutStorage)
+        popover.contentViewController = popoverController
         popover.behavior = NSPopover.Behavior.transient;
         
         initMonitor()

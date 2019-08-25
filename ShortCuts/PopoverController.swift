@@ -44,15 +44,19 @@ class PopoverController : NSViewController, NSTableViewDataSource, NSTableViewDe
     // NSTableViewDelegate
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if let storage = shortcutStorage?.getAllShortcuts() {
-            let array = Array(storage.keys.map { $0.toString() + " " + storage[$0]!.name})
-            return NSTextField(string: array[row])
-        } else {
-            return nil
+            let array = Array(storage.keys)
+            let cellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "appCell"), owner: self) as! AppCell
+            
+            cellView.setAppName(storage[array[row]]!.name)
+            cellView.setShortcut(array[row].toString())
+            return cellView
         }
+
+        return nil
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return 20.0
+        return 25.0
     }
     
 }

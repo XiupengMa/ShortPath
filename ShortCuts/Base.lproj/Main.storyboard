@@ -723,10 +723,10 @@
                                     <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
                             </button>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="CDN-ZU-UeU">
+                            <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="CDN-ZU-UeU">
                                 <rect key="frame" x="19" y="36" width="304" height="184"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <clipView key="contentView" id="ys6-RY-mgc">
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ys6-RY-mgc">
                                     <rect key="frame" x="1" y="1" width="302" height="182"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -734,7 +734,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="302" height="182"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
-                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
                                                 <tableColumn width="299" minWidth="40" maxWidth="1000" id="OGP-bn-e9c">
@@ -750,22 +750,40 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView id="nz4-Ya-TqH">
-                                                            <rect key="frame" x="1" y="1" width="299" height="17"/>
+                                                        <tableCellView identifier="appCell" id="nz4-Ya-TqH" customClass="AppCell" customModule="ShortCuts" customModuleProvider="target">
+                                                            <rect key="frame" x="1" y="1" width="299" height="25"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xlv-hC-3Xb">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="299" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="KoS-L1-yU3">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                <textField identifier="appName" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uNe-JB-w6m">
+                                                                    <rect key="frame" x="-2" y="0.0" width="159" height="25"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="left" title="AppName" usesSingleLineMode="YES" id="XZ9-ED-iB0">
+                                                                        <font key="font" metaFont="system" size="17"/>
+                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGX-zG-qqh">
+                                                                    <rect key="frame" x="272" y="-3" width="27" height="32"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <buttonCell key="cell" type="bevel" title="⌫" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="g3r-o9-oqz">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="system" size="16"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                                <textField identifier="shortcut" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EEG-jR-ZNx">
+                                                                    <rect key="frame" x="150" y="0.0" width="119" height="25"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Shotcut" usesSingleLineMode="YES" id="jhK-mK-K3E">
+                                                                        <font key="font" metaFont="system" size="17"/>
+                                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
                                                             </subviews>
                                                             <connections>
-                                                                <outlet property="textField" destination="xlv-hC-3Xb" id="2Vx-v5-06b"/>
+                                                                <outlet property="appName" destination="uNe-JB-w6m" id="waP-TD-G9Z"/>
+                                                                <outlet property="shortcut" destination="EEG-jR-ZNx" id="dQz-j6-SCJ"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
@@ -773,13 +791,14 @@
                                             </tableColumns>
                                         </tableView>
                                     </subviews>
+                                    <nil key="backgroundColor"/>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="hqQ-Sb-R18">
-                                    <rect key="frame" x="1" y="167" width="301" height="16"/>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="hqQ-Sb-R18">
+                                    <rect key="frame" x="1" y="167" width="302" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="gvS-lN-BcL">
-                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <rect key="frame" x="288" y="0.0" width="16" height="184"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

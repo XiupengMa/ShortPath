@@ -47,6 +47,6 @@ class Shortcut: Hashable {
             str += "\u{2318}"
         }
         
-        return str + (characters ?? "").uppercased()
+        return str + (characters ?? "").replacingOccurrences(of: " ", with: "SPACE").uppercased()
     }
 }

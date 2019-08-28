@@ -25,6 +25,10 @@ class ShortcutStorage {
         return localStorage[shortcut]
     }
     
+    public func removeShortcut(_ shortcut: Shortcut) {
+        localStorage.removeValue(forKey: shortcut)
+    }
+    
     public func storeAssignmentModeStorage(_ shortcut: Shortcut) {
         assignmentModeShortcut = shortcut
     }

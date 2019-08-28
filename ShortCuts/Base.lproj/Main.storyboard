@@ -770,6 +770,9 @@
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system" size="16"/>
                                                                     </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="onDelete:" target="nz4-Ya-TqH" id="Bdo-dC-fml"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <textField identifier="shortcut" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EEG-jR-ZNx">
                                                                     <rect key="frame" x="150" y="0.0" width="119" height="25"/>
@@ -783,7 +786,7 @@
                                                             </subviews>
                                                             <connections>
                                                                 <outlet property="appName" destination="uNe-JB-w6m" id="waP-TD-G9Z"/>
-                                                                <outlet property="shortcut" destination="EEG-jR-ZNx" id="dQz-j6-SCJ"/>
+                                                                <outlet property="shortcutName" destination="EEG-jR-ZNx" id="42q-cz-qIQ"/>
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
@@ -793,7 +796,7 @@
                                     </subviews>
                                     <nil key="backgroundColor"/>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="hqQ-Sb-R18">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="hqQ-Sb-R18">
                                     <rect key="frame" x="1" y="167" width="302" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

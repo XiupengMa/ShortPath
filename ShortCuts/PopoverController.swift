@@ -9,9 +9,13 @@
 import Foundation
 import AppKit
 
-class PopoverController : NSViewController, NSTableViewDataSource, NSTableViewDelegate {
+class PopoverController : NSViewController, NSTableViewDataSource, NSTableViewDelegate, AppCellDelegate {
     private var shortcutStorage: ShortcutStorage?
+    private var shortcuts: [Shortcut] = []
+    private var apps: [Application] = []
+    
     @IBOutlet weak var appList: NSTableView!
+    
     static func freshController() -> PopoverController {
         let identifier = NSStoryboard.SceneIdentifier("PopoverController")
         guard let viewcontroller = NSStoryboard.main?.instantiateController(withIdentifier: identifier) as? PopoverController else {
@@ -33,6 +37,14 @@ class PopoverController : NSViewController, NSTableViewDataSource, NSTableViewDe
     
     func setShortcutStorage(shortcutStorage: ShortcutStorage) {
         self.shortcutStorage = shortcutStorage
+        refreshData()
+    }
+    
+    func refreshData() {
+        if let storage = shortcutStorage?.getAllShortcuts() {
+            shortcuts = Array(storage.keys)
+            apps = Array(storage.values)
+        }
     }
     
     // NSTableViewDataSource
@@ -43,12 +55,13 @@ class PopoverController : NSViewController, NSTableViewDataSource, NSTableViewDe
     
     // NSTableViewDelegate
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        if let storage = shortcutStorage?.getAllShortcuts() {
-            let array = Array(storage.keys)
+        if shortcuts.count > row {
+            print("renderCell")
             let cellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "appCell"), owner: self) as! AppCell
             
-            cellView.setAppName(storage[array[row]]!.name)
-            cellView.setShortcut(array[row].toString())
+            cellView.setApp(apps[row])
+            cellView.setShortcut(shortcuts[row])
+            cellView.delegate = self
             return cellView
         }
 
@@ -59,4 +72,12 @@ class PopoverController : NSViewController, NSTableViewDataSource, NSTableViewDe
         return 25.0
     }
     
+    // AppCellDelegate
+    func onDelete(cell: AppCell) {
+        if let shortcut = cell.getShortcut() {
+            shortcutStorage?.removeShortcut(shortcut)
+            refreshData()
+            appList.reloadData()
+        }
+    }
 }

@@ -119,6 +119,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
     }
 
     func onExitAssignmentMode(withAssignedApplication application: Application, replacedApplication: Application?, withShortcut shortcut: Shortcut, fromMonitor: Monitor) {
+        popoverController.refreshData()
        print("exiting assignment mode, assigned short cut \(shortcut) to application \(application.name)")
     }
 
@@ -132,18 +133,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, MonitorDelegte, NSMenuDelega
 
     func onFailedToFindRunningInstanceOfApplication(application: Application, withShortcut shortcut: Shortcut, fromMonitor: Monitor) {
        print("failed to find running instance of application \(application.name)")
-    }
-    
-    // NSMenu Delegate
-    func menuWillOpen(_ menu: NSMenu) {
-//        menu.removeAllItems()
-//
-//        menu.addItem(NSMenuItem(title: "Print Quote", action: #selector(AppDelegate.printQuote(_:)), keyEquivalent: "P"))
-//        menu.addItem(NSMenuItem.separator())
-//        getApplicationMenuItems().forEach { (item) in
-//            menu.addItem(item)
-//        }
-//        menu.addItem(NSMenuItem.separator())
-//        menu.addItem(NSMenuItem(title: "Quit Quotes", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
     }
 }

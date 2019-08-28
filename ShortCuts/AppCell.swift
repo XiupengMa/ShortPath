@@ -9,15 +9,33 @@
 import Foundation
 import AppKit
 
+protocol AppCellDelegate {
+    func onDelete(cell: AppCell) -> Void
+}
+
 class AppCell: NSTableCellView {
-    @IBOutlet weak var appName: NSTextField!
-    @IBOutlet weak var shortcut: NSTextField!
+    public var delegate: AppCellDelegate?
+    private var app: Application?
+    private var shortcut: Shortcut?
     
-    public func setAppName(_ appName: String) {
-        self.appName.stringValue = appName
+    @IBOutlet weak var appName: NSTextField!
+    @IBOutlet weak var shortcutName: NSTextField!
+    
+    public func setApp(_ app: Application) {
+        self.app = app
+        self.appName.stringValue = app.name
     }
     
-    public func setShortcut(_ shortcut: String) {
-        self.shortcut.stringValue = shortcut
+    public func setShortcut(_ shortcut: Shortcut) {
+        self.shortcut = shortcut
+        self.shortcutName.stringValue = shortcut.toString()
+    }
+    
+    public func getShortcut() -> Shortcut? {
+        return shortcut
+    }
+
+    @IBAction func onDelete(_ sender: Any) {
+        delegate?.onDelete(cell: self)
     }
 }
